@@ -1,0 +1,16 @@
+Package: com.ttlongdl.batteryukrm
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 168
+Depends: mobilesubstrate
+Filename: debs/com.ttlongdl.batteryukrm_1.0.0_iphoneos-arm64.deb
+Size: 5816
+MD5sum: 0021e805b1ff38837e2bdc0e43526ae8
+SHA1: 61b486997fa5a522d395aede6033b57509c3f141
+SHA256: 8160c7f5db8d84e6ef7f8100a97cce9530df037771503ee8890c9d01aae18708
+Section: Tweaks
+Description: Removes Apple repair warnings, restores Battery Health maximum capacity, and suppresses the Settings repair badge on supported iOS versions.
+Author: ttlongdl
+Name: BatteryUKRM
+
