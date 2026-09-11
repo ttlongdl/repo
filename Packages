@@ -1,16 +1,16 @@
 Package: com.ttlongdl.batteryukrm
-Version: 1.0.0
+Version: 1.0.1
 Architecture: iphoneos-arm64
 Maintainer: ttlongdl
 Installed-Size: 168
 Depends: mobilesubstrate
-Filename: debs/com.ttlongdl.batteryukrm_1.0.0_iphoneos-arm64.deb
-Size: 5816
-MD5sum: 0021e805b1ff38837e2bdc0e43526ae8
-SHA1: 61b486997fa5a522d395aede6033b57509c3f141
-SHA256: 8160c7f5db8d84e6ef7f8100a97cce9530df037771503ee8890c9d01aae18708
+Filename: debs/com.ttlongdl.batteryukrm_1.0.1_iphoneos-arm64.deb
+Size: 5792
+MD5sum: b4d9838a21dd290faed5117e242b85ad
+SHA1: 79c06af5c8cba732afa0fdb455ead18adc2d8e50
+SHA256: 10d07bfdf46e6813c7fdbdad6595dd521e813f72264079c4699d6685ecf8e256
 Section: Tweaks
-Description: Removes Apple repair warnings, restores Battery Health maximum capacity, and suppresses the Settings repair badge on supported iOS versions.
+Description: Hides Apple repair warnings and restores the native Battery Health display for replaced batteries.
 Author: ttlongdl
 Name: BatteryUKRM
 
