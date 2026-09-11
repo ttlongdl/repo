@@ -15,17 +15,18 @@ Author: ttlongdl
 Name: BatteryUKRM
 
 Package: com.ttlongdl.globalize17
-Version: 0.4.0-1
+Version: 0.4.0-2
 Architecture: iphoneos-arm64
 Maintainer: ttlongdl
 Installed-Size: 272
 Depends: mobilesubstrate, firmware (>= 17.0)
-Filename: debs/com.ttlongdl.globalize17_0.4.0-1_iphoneos-arm64.deb
-Size: 4528
-MD5sum: 6fdbd29c94047693edf71c2a79b16958
-SHA1: a8aff5b71dd14ca594efc63779750cf93d37e843
-SHA256: 32f7f49183a93084f2a93bd4c47ba9aae4f3fa27a2d3270a367af9532dfda944
+Filename: debs/com.ttlongdl.globalize17_0.4.0-2_iphoneos-arm64.deb
+Size: 4552
+MD5sum: bc1fcf38d0f5b2eddeb5faa92f20313a
+SHA1: 36d79eee5a23456291b478bdb84cedb8f39526d5
+SHA256: 1de4f69f3f7ef1c2d8692d293d5352614a95cb199d23aee049e78993e34bc95a
 Section: Tweaks
+Homepage: https://github.com/ttlongdl/Globalize
 Description: Unofficial rootless iOS 17 port of Globalize by parrotgeek1.
 Author: parrotgeek1, ported by ttlongdl
 Name: Globalize17
