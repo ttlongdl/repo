@@ -32,16 +32,16 @@ Author: parrotgeek1, ported by ttlongdl
 Name: Globalize17
 
 Package: com.shajon.fbplus
-Version: 1.1.0
+Version: 1.1.1
 Architecture: iphoneos-arm64
 Maintainer: ttlongdl
-Installed-Size: 824
+Installed-Size: 840
 Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.shajon.fbplus_1.1.0_iphoneos-arm64.deb
-Size: 456744
-MD5sum: 8952f0d6dc90ad96a78624f149ca39ba
-SHA1: 321cde155f1ca87a05b33836e769a5161f704a68
-SHA256: e13542851e18afd43e58c2648bb935c4f033528805219ae3a4ad71d15e6adedd
+Filename: debs/com.shajon.fbplus_1.1.1_iphoneos-arm64.deb
+Size: 458218
+MD5sum: b2e08c0cd5635630044b2fce48b68379
+SHA1: 9644899416f27b17a0802054ecffd8911f843c74
+SHA256: 58c592f8a377e00dd96c2f3ece9ce12d15ce27b793ca83a1efccec61f30edc5f
 Section: Tweaks
 Homepage: https://github.com/ttlongdl/Facebook-Plus
 Description: Privacy and enhancement tweak for Facebook with Reels and Stories downloading, feed controls, Ghost Mode, and customization.
