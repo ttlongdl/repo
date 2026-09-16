@@ -31,3 +31,19 @@ Description: Unofficial rootless iOS 17 port of Globalize by parrotgeek1.
 Author: parrotgeek1, ported by ttlongdl
 Name: Globalize17
 
+Package: com.shajon.fbplus
+Version: 1.1.0
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 824
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.shajon.fbplus_1.1.0_iphoneos-arm64.deb
+Size: 456744
+MD5sum: 8952f0d6dc90ad96a78624f149ca39ba
+SHA1: 321cde155f1ca87a05b33836e769a5161f704a68
+SHA256: e13542851e18afd43e58c2648bb935c4f033528805219ae3a4ad71d15e6adedd
+Section: Tweaks
+Homepage: https://github.com/ttlongdl/Facebook-Plus
+Description: Privacy and enhancement tweak for Facebook with Reels and Stories downloading, feed controls, Ghost Mode, and customization.
+Author: S. SHAJON
+Name: Facebook Plus
