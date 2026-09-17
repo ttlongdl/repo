@@ -1,3 +1,20 @@
+Package: com.shajon.fbplus
+Version: 1.1.1
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 840
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.shajon.fbplus_1.1.1_iphoneos-arm64.deb
+Size: 458218
+MD5sum: b2e08c0cd5635630044b2fce48b68379
+SHA1: 9644899416f27b17a0802054ecffd8911f843c74
+SHA256: 58c592f8a377e00dd96c2f3ece9ce12d15ce27b793ca83a1efccec61f30edc5f
+Section: Tweaks
+Description: Privacy and enhancement tweak for Facebook with Reels and Stories downloading, feed controls, Ghost Mode, and customization.
+Tag: role::hacker
+Author: S. SHAJON
+Name: Facebook Plus
+
 Package: com.ttlongdl.batteryukrm
 Version: 1.0.1
 Architecture: iphoneos-arm64
@@ -13,6 +30,23 @@ Section: Tweaks
 Description: Hides Apple repair warnings and restores the native Battery Health display for replaced batteries.
 Author: ttlongdl
 Name: BatteryUKRM
+
+Package: com.ttlongdl.fbaudiofix
+Version: 0.3.14-1
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 92
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.ttlongdl.fbaudiofix_0.3.14-1_iphoneos-arm64.deb
+Size: 11074
+MD5sum: a897f7f75ece79952bf79e76a1936aa2
+SHA1: d66c151d6ec05c3dc59da6b04ee17cedaa3c7392
+SHA256: b161425569e1be519ff5bfbc1a74d58571a2831b4c0dd1ecfd65ab556ba81f48
+Section: Tweaks
+Homepage: https://github.com/ttlongdl/FBAudioFix
+Description: Prevents passive Facebook browsing from interrupting background audio while preserving intentional Facebook media playback.
+Author: ttlongdl
+Name: FBAudioFix
 
 Package: com.ttlongdl.globalize17
 Version: 0.4.0-2
@@ -31,19 +65,3 @@ Description: Unofficial rootless iOS 17 port of Globalize by parrotgeek1.
 Author: parrotgeek1, ported by ttlongdl
 Name: Globalize17
 
-Package: com.shajon.fbplus
-Version: 1.1.1
-Architecture: iphoneos-arm64
-Maintainer: ttlongdl
-Installed-Size: 840
-Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.shajon.fbplus_1.1.1_iphoneos-arm64.deb
-Size: 458218
-MD5sum: b2e08c0cd5635630044b2fce48b68379
-SHA1: 9644899416f27b17a0802054ecffd8911f843c74
-SHA256: 58c592f8a377e00dd96c2f3ece9ce12d15ce27b793ca83a1efccec61f30edc5f
-Section: Tweaks
-Homepage: https://github.com/ttlongdl/Facebook-Plus
-Description: Privacy and enhancement tweak for Facebook with Reels and Stories downloading, feed controls, Ghost Mode, and customization.
-Author: S. SHAJON
-Name: Facebook Plus
