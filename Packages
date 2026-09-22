@@ -1,16 +1,16 @@
 Package: com.shajon.fbplus
-Version: 1.1.1
+Version: 1.0.1-1
 Architecture: iphoneos-arm64
-Maintainer: ttlongdl
-Installed-Size: 840
+Maintainer: S. SHAJON
+Installed-Size: 960
 Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.shajon.fbplus_1.1.1_iphoneos-arm64.deb
-Size: 458218
-MD5sum: b2e08c0cd5635630044b2fce48b68379
-SHA1: 9644899416f27b17a0802054ecffd8911f843c74
-SHA256: 58c592f8a377e00dd96c2f3ece9ce12d15ce27b793ca83a1efccec61f30edc5f
+Filename: debs/com.shajon.fbplus_1.0.1-1_iphoneos-arm64.deb
+Size: 484286
+MD5sum: 4792210dfe445776f50f79d2d976bf8c
+SHA1: c0571bac6a7cb015879172b5b127c53c2aa915e1
+SHA256: be29f96a5f9318cd83e8d5b29a9f6c44f1332ecbae3d7977f47d0da67aac1738
 Section: Tweaks
-Description: Privacy and enhancement tweak for Facebook with Reels and Stories downloading, feed controls, Ghost Mode, and customization.
+Description: Browse stories privately, confirm before liking, and quieten the feed.
 Tag: role::hacker
 Author: S. SHAJON
 Name: Facebook Plus
