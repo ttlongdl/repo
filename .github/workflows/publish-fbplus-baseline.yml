@@ -1,0 +1,39 @@
+name: Publish Facebook Plus baseline
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download tested Facebook Plus build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          mkdir -p /tmp/fbplus
+          gh run download 35677448727 --repo ttlongdl/Facebook-Plus --name Facebook-Plus --dir /tmp/fbplus
+          ls -lah /tmp/fbplus
+          ROOTLESS="$(find /tmp/fbplus -type f -name '*1.0.1-1-rootless.deb' -print -quit)"
+          test -n "$ROOTLESS"
+          rm -f debs/com.shajon.fbplus_1.1.0_iphoneos-arm64.deb debs/com.shajon.fbplus_1.1.1_iphoneos-arm64.deb
+          cp "$ROOTLESS" debs/com.shajon.fbplus_1.0.1-1_iphoneos-arm64.deb
+      - name: Rebuild APT indexes
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y dpkg-dev
+          dpkg-scanpackages --multiversion debs /dev/null > Packages
+          gzip -9c Packages > Packages.gz
+      - name: Commit baseline
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish Facebook Plus 1.0.1-1 baseline"
+          git push
