@@ -2,6 +2,10 @@ name: Publish Facebook Plus baseline
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-fbplus-baseline.yml'
 
 permissions:
   contents: write
