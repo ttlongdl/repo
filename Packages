@@ -1,14 +1,14 @@
 Package: com.shajon.fbplus
-Version: 1.0.1-2
+Version: 1.0.1-5
 Architecture: iphoneos-arm64
 Maintainer: S. SHAJON
-Installed-Size: 960
+Installed-Size: 972
 Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.shajon.fbplus_1.0.1-2_iphoneos-arm64.deb
-Size: 484670
-MD5sum: 5d08b5c153db251ef29a70d21f7d9db9
-SHA1: 52a1d68ba55ec1751c792cd44471021770786624
-SHA256: 34b8f82177fd687f583022e28677fffb35654594932ca972a4cd5706eec74c46
+Filename: debs/com.shajon.fbplus_1.0.1-5_iphoneos-arm64.deb
+Size: 488124
+MD5sum: 8e873de1d0e1bf23f3cfe67c04f45714
+SHA1: 286f302dc892c0433d431ac1054dccb36aa6a0e5
+SHA256: 6700a923ef2cce6b46454d3334ac31270ade4d7083a80b67b562e4d0f4b2faca
 Section: Tweaks
 Description: Browse stories privately, confirm before liking, and quieten the feed.
 Tag: role::hacker
