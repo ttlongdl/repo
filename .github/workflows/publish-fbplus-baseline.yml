@@ -16,18 +16,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download tested Facebook Plus build
+      - name: Download Facebook Plus v1.0.1-5 rootless release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euxo pipefail
           mkdir -p /tmp/fbplus
-          gh run download 35689915558 --repo ttlongdl/Facebook-Plus --name Facebook-Plus --dir /tmp/fbplus
-          ls -lah /tmp/fbplus
-          ROOTLESS="$(find /tmp/fbplus -type f -name '*1.0.1-2-rootless.deb' -print -quit)"
-          test -n "$ROOTLESS"
-          rm -f debs/com.shajon.fbplus_1.0.1-1_iphoneos-arm64.deb debs/com.shajon.fbplus_1.1.0_iphoneos-arm64.deb debs/com.shajon.fbplus_1.1.1_iphoneos-arm64.deb
-          cp "$ROOTLESS" debs/com.shajon.fbplus_1.0.1-2_iphoneos-arm64.deb
+          gh release download v1.0.1-5 \
+            --repo ttlongdl/Facebook-Plus \
+            --pattern "Facebook-Plus-v1.0.1-5-rootless.deb" \
+            --dir /tmp/fbplus
+          ROOTLESS="/tmp/fbplus/Facebook-Plus-v1.0.1-5-rootless.deb"
+          test -s "$ROOTLESS"
+
+          # Keep only the current Facebook Plus package in the APT pool.
+          rm -f debs/com.shajon.fbplus_*_iphoneos-arm64.deb
+          cp "$ROOTLESS" debs/com.shajon.fbplus_1.0.1-5_iphoneos-arm64.deb
       - name: Rebuild APT indexes
         run: |
           sudo apt-get update -qq
@@ -39,5 +43,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Publish Facebook Plus 1.0.1-2 official"
+          git commit -m "Publish Facebook Plus 1.0.1-5 official"
           git push
