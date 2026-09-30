@@ -32,16 +32,16 @@ Author: ttlongdl
 Name: BatteryUKRM
 
 Package: com.ttlongdl.fbaudiofix
-Version: 0.3.14-1
+Version: 0.3.17
 Architecture: iphoneos-arm64
 Maintainer: ttlongdl
-Installed-Size: 92
+Installed-Size: 76
 Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.ttlongdl.fbaudiofix_0.3.14-1_iphoneos-arm64.deb
-Size: 11074
-MD5sum: a897f7f75ece79952bf79e76a1936aa2
-SHA1: d66c151d6ec05c3dc59da6b04ee17cedaa3c7392
-SHA256: b161425569e1be519ff5bfbc1a74d58571a2831b4c0dd1ecfd65ab556ba81f48
+Filename: debs/com.ttlongdl.fbaudiofix_0.3.17_iphoneos-arm64.deb
+Size: 8988
+MD5sum: 734dc1b22eea314a05a8da40810b9a96
+SHA1: a20fbdd23aa942986939d706888759ac7df525fe
+SHA256: 00cd63b419a4052a95f9fe5986cbc93af5997796399e58b4e97f242afcf39ec5
 Section: Tweaks
 Homepage: https://github.com/ttlongdl/FBAudioFix
 Description: Prevents passive Facebook browsing from interrupting background audio while preserving intentional Facebook media playback.
