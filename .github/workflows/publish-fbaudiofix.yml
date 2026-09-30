@@ -1,0 +1,43 @@
+name: Publish FBAudioFix official
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-fbaudiofix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download FBAudioFix v0.3.17
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          mkdir -p /tmp/fbaudiofix
+          gh release download v0.3.17             --repo ttlongdl/FBAudioFix             --pattern "FBAudioFix-v0.3.17-rootless.deb"             --dir /tmp/fbaudiofix
+          DEB="/tmp/fbaudiofix/FBAudioFix-v0.3.17-rootless.deb"
+          test -s "$DEB"
+          rm -f debs/com.ttlongdl.fbaudiofix_*_iphoneos-arm64.deb
+          cp "$DEB" debs/com.ttlongdl.fbaudiofix_0.3.17_iphoneos-arm64.deb
+
+      - name: Rebuild APT indexes
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y dpkg-dev
+          dpkg-scanpackages --multiversion debs /dev/null > Packages
+          gzip -9c Packages > Packages.gz
+
+      - name: Commit official release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish FBAudioFix 0.3.17 official"
+          git push
