@@ -32,18 +32,18 @@ Author: ttlongdl
 Name: BatteryUKRM
 
 Package: com.ttlongdl.batteryukrm-rh
-Version: 1.0.2
+Version: 1.1.0
 Architecture: iphoneos-arm64e
 Maintainer: ttlongdl
-Installed-Size: 172
-Depends: mobilesubstrate
-Filename: debs/com.ttlongdl.batteryukrm-rh_1.0.2_iphoneos-arm64e.deb
-Size: 8736
-MD5sum: 151bfc92f88438617b12f11ee6c47fd3
-SHA1: 62a37fddc3a76c81c1641188d6e7ecec78430554
-SHA256: 8772db5dc74666cd0de480ee20fc84742dadd32757c774791df164fda5fdc6d2
+Installed-Size: 388
+Depends: mobilesubstrate, preferenceloader
+Filename: debs/com.ttlongdl.batteryukrm-rh_1.1.0_iphoneos-arm64e.deb
+Size: 25706
+MD5sum: 4aedd737926101ca5b63758bef064604
+SHA1: 0d371213d06a045058fec38bb36d221f7e948ad2
+SHA256: d135f66f0f24dc273e797b45d13364a73b955ad6bdda92d6f058682eede915d5
 Section: Tweaks
-Description: Roothide build of BatteryUKRM. Hides Apple battery repair warnings, restores the native Battery Health display for replaced batteries, and shows the real battery cycle count.
+Description: Roothide build of BatteryUKRM with configurable repair warning, Maximum Capacity, and cycle count features.
 Author: ttlongdl
 Name: BatteryUKRM-RH
 
@@ -80,4 +80,3 @@ Homepage: https://github.com/ttlongdl/Globalize
 Description: Unofficial rootless iOS 17 port of Globalize by parrotgeek1.
 Author: parrotgeek1, ported by ttlongdl
 Name: Globalize17
-
