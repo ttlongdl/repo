@@ -16,18 +16,18 @@ Author: S. SHAJON
 Name: Facebook Plus
 
 Package: com.ttlongdl.batteryukrm
-Version: 1.0.2
+Version: 1.1.0
 Architecture: iphoneos-arm64
 Maintainer: ttlongdl
-Installed-Size: 172
-Depends: mobilesubstrate
-Filename: debs/com.ttlongdl.batteryukrm_1.0.2_iphoneos-arm64.deb
-Size: 8770
-MD5sum: a29b994537550396aca99d17e6c71e5a
-SHA1: 8d7de263ba5ad2f4e872c2103c08c61a043ba2c4
-SHA256: 82839499daee9b03e9c254ed540ed53bb6a8a989bdff4bdd80a299983793e15a
+Installed-Size: 388
+Depends: mobilesubstrate, preferenceloader
+Filename: debs/com.ttlongdl.batteryukrm_1.1.0_iphoneos-arm64.deb
+Size: 25744
+MD5sum: ebc640db8acaebde8012af944d6bec93
+SHA1: aa0872c5cd7f727e5b3bfe44f836d70c2da57478
+SHA256: 89ace8ffba7a95df2a38e746dbbb93f53ebbf2b5237df88be6b5d6244ed30b5c
 Section: Tweaks
-Description: Hides Apple repair warnings, restores the native Battery Health display for replaced batteries, and shows the real battery cycle count.
+Description: Configurable battery repair warning, Maximum Capacity, and cycle count features for replacement batteries.
 Author: ttlongdl
 Name: BatteryUKRM
 
