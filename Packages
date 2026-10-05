@@ -27,7 +27,7 @@ MD5sum: ebc640db8acaebde8012af944d6bec93
 SHA1: aa0872c5cd7f727e5b3bfe44f836d70c2da57478
 SHA256: 89ace8ffba7a95df2a38e746dbbb93f53ebbf2b5237df88be6b5d6244ed30b5c
 Section: Tweaks
-Description: Configurable battery repair warning, Maximum Capacity, and cycle count features for replacement batteries.
+Description: Modular Battery Health utility for replaced batteries. Independently hide repair warnings, restore Maximum Capacity, and show the real Cycle Count. Includes bilingual Settings controls.
 Author: ttlongdl
 Name: BatteryUKRM
 
@@ -43,7 +43,7 @@ MD5sum: 4aedd737926101ca5b63758bef064604
 SHA1: 0d371213d06a045058fec38bb36d221f7e948ad2
 SHA256: d135f66f0f24dc273e797b45d13364a73b955ad6bdda92d6f058682eede915d5
 Section: Tweaks
-Description: Roothide build of BatteryUKRM with configurable repair warning, Maximum Capacity, and cycle count features.
+Description: Roothide build of BatteryUKRM 1.1.0 with independent repair-warning, Maximum Capacity, and real Cycle Count modules plus bilingual Settings controls.
 Author: ttlongdl
 Name: BatteryUKRM-RH
 
