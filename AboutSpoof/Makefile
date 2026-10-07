@@ -9,7 +9,10 @@ AboutSpoof_FILES = Tweak.xm
 AboutSpoof_CFLAGS = -fobjc-arc
 AboutSpoof_FRAMEWORKS = Foundation
 
+SUBPROJECTS += aboutspoofprefs
+
 include $(THEOS_MAKE_PATH)/tweak.mk
+include $(THEOS_MAKE_PATH)/aggregate.mk
 
 after-install::
 	install.exec "killall -9 Preferences || true"
