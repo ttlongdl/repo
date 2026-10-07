@@ -1,42 +1,37 @@
 #import <Foundation/Foundation.h>
-#import <substrate.h>
-#import <CoreFoundation/CoreFoundation.h>
-#import <dlfcn.h>
+#import <Preferences/PSSpecifier.h>
 
-typedef CFPropertyListRef (*MGCopyAnswer_t)(CFStringRef);
-static MGCopyAnswer_t originalMGCopyAnswer = NULL;
 static NSString *const kPrefsPath = @"/var/mobile/Library/Preferences/com.ttlongdl.aboutspoof.plist";
 
-static NSDictionary *Prefs(void) {
-    return [NSDictionary dictionaryWithContentsOfFile:kPrefsPath] ?: @{};
+static NSString *ABSValue(NSString *key) {
+    NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:kPrefsPath];
+    id value = [prefs objectForKey:key];
+    if ([value isKindOfClass:[NSString class]] && [value length] > 0) return value;
+    return nil;
 }
-static NSString *PrefString(NSString *key) {
-    id value = Prefs()[key];
-    return ([value isKindOfClass:NSString.class] && [value length] > 0) ? value : nil;
-}
 
-static CFPropertyListRef spoofedMGCopyAnswer(CFStringRef key) {
-    if (key && CFGetTypeID(key) == CFStringGetTypeID()) {
-        NSString *name = (__bridge NSString *)key;
-        NSString *value = nil;
+%hook PSSpecifier
+- (id)performGetter {
+    NSString *sid = [self identifier];
 
-        if ([name isEqualToString:@"UserAssignedDeviceName"]) {
-            value = PrefString(@"modelName");
-        } else if ([name isEqualToString:@"ProductVersion"]) {
-            value = PrefString(@"iosVersion");
-        }
-
-        if (value) return (__bridge_retained CFStringRef)value;
+    if ([sid isEqualToString:@"ProductModelName"]) {
+        NSString *value = ABSValue(@"modelName");
+        if (value) return value;
     }
-    return originalMGCopyAnswer ? originalMGCopyAnswer(key) : NULL;
+
+    if ([sid isEqualToString:@"SW_VERSION_SPECIFIER"]) {
+        NSString *value = ABSValue(@"iosVersion");
+        if (value) return value;
+    }
+
+    return %orig;
 }
+%end
 
 %ctor {
     @autoreleasepool {
-        if (![[NSBundle mainBundle].bundleIdentifier isEqualToString:@"com.apple.Preferences"]) return;
-        void *handle = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_LAZY);
-        if (!handle) return;
-        void *symbol = dlsym(handle, "MGCopyAnswer");
-        if (symbol) MSHookFunction(symbol, (void *)&spoofedMGCopyAnswer, (void **)&originalMGCopyAnswer);
+        if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.Preferences"]) {
+            %init;
+        }
     }
 }
