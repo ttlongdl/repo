@@ -1,5 +1,9 @@
 #import <Foundation/Foundation.h>
-#import <CoreFoundation/CoreFoundation.h>\n#import <substrate.h>\n#import <stdint.h>\n\nextern "C" CFPropertyListRef MGCopyAnswer(CFStringRef);
+#import <CoreFoundation/CoreFoundation.h>
+#import <substrate.h>
+#import <stdint.h>
+
+extern "C" CFPropertyListRef MGCopyAnswer(CFStringRef);
 
 static NSString *const kPrefsPath = @"/var/mobile/Library/Preferences/com.ttlongdl.aboutspoof.plist";
 
