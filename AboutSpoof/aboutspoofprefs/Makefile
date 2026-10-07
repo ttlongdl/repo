@@ -1,3 +1,4 @@
+TARGET = iphone:clang:16.5:15.0
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = AboutSpoofPrefs
