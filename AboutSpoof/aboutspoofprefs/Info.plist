@@ -3,8 +3,9 @@
 <plist version="1.0"><dict>
 <key>CFBundleIdentifier</key><string>com.ttlongdl.aboutspoof.prefs</string>
 <key>CFBundleName</key><string>AboutSpoofPrefs</string>
+<key>CFBundleExecutable</key><string>AboutSpoofPrefs</string>
 <key>CFBundlePackageType</key><string>BNDL</string>
-<key>CFBundleVersion</key><string>0.2.0</string>
-<key>CFBundleShortVersionString</key><string>0.2.0</string>
+<key>CFBundleVersion</key><string>0.2.2</string>
+<key>CFBundleShortVersionString</key><string>0.2.2</string>
 <key>NSPrincipalClass</key><string>ABSRootListController</string>
 </dict></plist>
