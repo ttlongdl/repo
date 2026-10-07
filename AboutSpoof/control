@@ -1,6 +1,6 @@
 Package: com.ttlongdl.aboutspoof
 Name: AboutSpoof
-Version: 0.3.1
+Version: 0.3.2
 Architecture: iphoneos-arm64
 Description: Cosmetic custom Model Name and iOS version spoof for Settings > General > About.
 Maintainer: ttlongdl
