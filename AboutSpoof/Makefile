@@ -8,7 +8,6 @@ TWEAK_NAME = AboutSpoof
 AboutSpoof_FILES = Tweak.xm
 AboutSpoof_CFLAGS = -fobjc-arc
 AboutSpoof_FRAMEWORKS = Foundation
-AboutSpoof_LIBRARIES = MobileGestalt
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 
