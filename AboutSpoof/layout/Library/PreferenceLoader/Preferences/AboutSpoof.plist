@@ -1,9 +1,0 @@
-{
-    entry = {
-        bundle = AboutSpoofPrefs;
-        cell = PSLinkCell;
-        detail = ABSRootListController;
-        isController = 1;
-        label = AboutSpoof;
-    };
-}
