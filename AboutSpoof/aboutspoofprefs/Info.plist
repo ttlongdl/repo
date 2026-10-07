@@ -5,7 +5,7 @@
 <key>CFBundleName</key><string>AboutSpoofPrefs</string>
 <key>CFBundleExecutable</key><string>AboutSpoofPrefs</string>
 <key>CFBundlePackageType</key><string>BNDL</string>
-<key>CFBundleVersion</key><string>0.2.2</string>
-<key>CFBundleShortVersionString</key><string>0.2.2</string>
+<key>CFBundleVersion</key><string>0.3.1</string>
+<key>CFBundleShortVersionString</key><string>0.3.1</string>
 <key>NSPrincipalClass</key><string>ABSRootListController</string>
 </dict></plist>
