@@ -1,0 +1,9 @@
+{
+    entry = {
+        bundle = AboutSpoofPrefs;
+        cell = PSLinkCell;
+        detail = ABSRootListController;
+        icon = "/Library/PreferenceBundles/AboutSpoofPrefs.bundle/icon.png";
+        label = AboutSpoof;
+    };
+}
