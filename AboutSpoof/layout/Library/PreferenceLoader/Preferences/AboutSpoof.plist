@@ -1,0 +1,8 @@
+{
+    entry = {
+        bundle = AboutSpoofPrefs;
+        cell = PSLinkCell;
+        detail = ABSRootListController;
+        label = AboutSpoof;
+    };
+}
