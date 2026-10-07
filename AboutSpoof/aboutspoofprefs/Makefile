@@ -1,0 +1,10 @@
+include $(THEOS)/makefiles/common.mk
+
+BUNDLE_NAME = AboutSpoofPrefs
+AboutSpoofPrefs_FILES = ABSRootListController.m
+AboutSpoofPrefs_FRAMEWORKS = UIKit
+AboutSpoofPrefs_PRIVATE_FRAMEWORKS = Preferences
+AboutSpoofPrefs_INSTALL_PATH = /Library/PreferenceBundles
+AboutSpoofPrefs_CFLAGS = -fobjc-arc
+
+include $(THEOS_MAKE_PATH)/bundle.mk
