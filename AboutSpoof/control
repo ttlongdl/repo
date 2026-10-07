@@ -1,9 +1,9 @@
 Package: com.ttlongdl.aboutspoof
 Name: AboutSpoof
-Version: 0.1.0
+Version: 0.2.0
 Architecture: iphoneos-arm64
-Description: Cosmetic model-name spoof for Settings > General > About. Does not modify MobileGestalt on disk.
+Description: Cosmetic custom Model Name spoof for Settings > General > About.
 Maintainer: ttlongdl
 Author: ttlongdl
 Section: Tweaks
-Depends: mobilesubstrate
+Depends: mobilesubstrate, preferenceloader
