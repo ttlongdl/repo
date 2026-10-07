@@ -1,0 +1,44 @@
+name: Build and publish AboutSpoof
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "AboutSpoof/**"
+      - ".github/workflows/aboutspoof.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git "$HOME/theos"
+          echo "THEOS=$HOME/theos" >> "$GITHUB_ENV"
+
+      - name: Install tools
+        run: |
+          brew install ldid dpkg
+
+      - name: Build rootless package
+        working-directory: AboutSpoof
+        run: |
+          make clean package FINALPACKAGE=1
+          ls -lah packages/
+
+      - name: Publish DEB and rebuild Packages
+        run: |
+          cp AboutSpoof/packages/*.deb debs/
+          dpkg-scanpackages -m debs /dev/null > Packages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add debs Packages
+          git commit -m "repo: publish AboutSpoof 0.1.0" || exit 0
+          git push
