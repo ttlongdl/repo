@@ -1,6 +1,9 @@
 #import "ABSRootListController.h"
 #import <Preferences/PSSpecifier.h>
 #import <UIKit/UIKit.h>
+#import <spawn.h>
+
+extern char **environ;
 
 @implementation ABSRootListController
 - (NSArray *)specifiers {
@@ -9,9 +12,13 @@
     }
     return _specifiers;
 }
+
 - (void)apply:(id)sender {
     CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(),
         CFSTR("com.ttlongdl.aboutspoof/Reload"), NULL, NULL, true);
-    system("killall -9 Preferences");
+
+    pid_t pid;
+    const char *argv[] = {"killall", "-9", "Preferences", NULL};
+    posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char *const *)argv, environ);
 }
 @end
