@@ -5,7 +5,7 @@
 
 typedef CFPropertyListRef (*MGCopyAnswer_t)(CFStringRef);
 static MGCopyAnswer_t originalMGCopyAnswer = NULL;
-static NSString *const kPrefsPath = @"/var/jb/var/mobile/Library/Preferences/com.ttlongdl.aboutspoof.plist";
+static NSString *const kPrefsPath = @"/var/mobile/Library/Preferences/com.ttlongdl.aboutspoof.plist";
 
 static NSString *SpoofedModelName(void) {
     NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:kPrefsPath];
