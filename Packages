@@ -47,6 +47,22 @@ Description: Cosmetic custom Model Name spoof for Settings > General > About.
 Author: ttlongdl
 Name: AboutSpoof
 
+Package: com.ttlongdl.aboutspoof
+Version: 0.2.1
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 348
+Depends: mobilesubstrate, preferenceloader
+Filename: debs/com.ttlongdl.aboutspoof_0.2.1_iphoneos-arm64.deb
+Size: 6884
+MD5sum: 18f5a8b4c2f1a754cecb0a78018704c0
+SHA1: a3d4be8a8c8649e9cd42b92afc19c9c5d69e83db
+SHA256: a5ec1df3e4afa898954fafb6551c1db16b68a93fe41efb90933bb2e53d79d017
+Section: Tweaks
+Description: Cosmetic custom Model Name spoof for Settings > General > About.
+Author: ttlongdl
+Name: AboutSpoof
+
 Package: com.ttlongdl.batteryukrm
 Version: 1.0.2
 Architecture: iphoneos-arm64
