@@ -1,0 +1,83 @@
+name: Publish Globalize17 RootHide to APT
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Successful Globalize RootHide build run ID (leave empty for latest successful)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apt-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Download successful RootHide build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_RUN_ID: ${{ inputs.run_id }}
+        run: |
+          set -euo pipefail
+          run_id="$INPUT_RUN_ID"
+          if [ -z "$run_id" ]; then
+            run_id="$(gh run list --repo ttlongdl/Globalize --workflow build-roothide.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId')"
+          fi
+          test -n "$run_id" && test "$run_id" != "null"
+          echo "Downloading RootHide artifact from run $run_id"
+          mkdir -p /tmp/globalize-roothide
+          gh run download "$run_id" --repo ttlongdl/Globalize --name Globalize17-RootHide --dir /tmp/globalize-roothide
+          find /tmp/globalize-roothide -type f -maxdepth 2 -print
+
+      - name: Validate and install RootHide DEB
+        run: |
+          set -euo pipefail
+          mapfile -t debs < <(find /tmp/globalize-roothide -type f -name '*.deb')
+          test "${#debs[@]}" -eq 1
+          deb="${debs[0]}"
+          test "$(dpkg-deb -f "$deb" Package)" = "com.ttlongdl.globalize17.roothide"
+          test "$(dpkg-deb -f "$deb" Architecture)" = "iphoneos-arm64e"
+          version="$(dpkg-deb -f "$deb" Version)"
+          test -n "$version"
+          dpkg-deb -e "$deb" /tmp/globalize-control
+          grep -Fq '/rootfs/var/mobile' /tmp/globalize-control/postinst
+          grep -Fq '/rootfs/var/mobile' /tmp/globalize-control/prerm
+          dpkg-deb --contents "$deb" > /tmp/globalize-files.txt
+          grep -Fq 'Globalize17.dylib' /tmp/globalize-files.txt
+          grep -Fq 'WAPIHook17.dylib' /tmp/globalize-files.txt
+          mkdir -p debs
+          cp "$deb" "debs/com.ttlongdl.globalize17.roothide_${version}_iphoneos-arm64e.deb"
+
+      - name: Rebuild APT indexes
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y dpkg-dev
+          dpkg-scanpackages --multiversion debs /dev/null > Packages
+          gzip -9c Packages > Packages.gz
+          grep -Fq 'Package: com.ttlongdl.globalize17.roothide' Packages
+          grep -Fq 'Package: com.ttlongdl.globalize17' Packages
+          grep -Fq 'Architecture: iphoneos-arm64e' Packages
+
+      - name: Commit to APT repository
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add debs Packages Packages.gz
+          if git diff --cached --quiet; then
+            echo "APT repository already up to date"
+          else
+            git commit -m "Publish Globalize17 RootHide package"
+            git push
+          fi
