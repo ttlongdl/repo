@@ -146,3 +146,19 @@ Description: Blocks Shopee app deep links and Shopee short links from Facebook
 Author: ttlongdl
 Name: ShopeeBlocker
 
+Package: com.ttlongdl.shopeeblocker-rh
+Version: 0.1.4
+Architecture: iphoneos-arm64e
+Maintainer: ttlongdl
+Installed-Size: 76
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.ttlongdl.shopeeblocker-rh_0.1.4_iphoneos-arm64e.deb
+Size: 4536
+MD5sum: 58953eddacfccde3d162fedfbb516b3e
+SHA1: 39bb55ae41760663fcf18f70535b095d7d6451bd
+SHA256: c3efea5dbad77eef9addb12bc4bd5b46401058bdfff9acfdcb64d45cdf4bef6e
+Section: Tweaks
+Description: RootHide build: blocks Shopee deep links and short links from Facebook
+Author: ttlongdl
+Name: ShopeeBlocker (RootHide)
+
