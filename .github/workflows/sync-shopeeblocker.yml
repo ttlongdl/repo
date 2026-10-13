@@ -33,6 +33,22 @@ jobs:
             --pattern 'com.ttlongdl.shopeeblocker_*_iphoneos-arm64.deb' \
             --dir /tmp/shopeeblocker
 
+      - name: Download latest RootHide beta release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/shopeeblocker-rh
+          tag="$(gh release list --repo ttlongdl/ShopeeBlocker --limit 100 --json tagName,isDraft,isPrerelease --jq '[.[] | select(.isDraft == false and (.tagName | endswith("-roothide")))] | .[0].tagName // empty')"
+          if [ -z "$tag" ]; then
+            echo "No RootHide release yet; retaining existing RootHide package."
+            exit 0
+          fi
+          echo "Latest RootHide tag: $tag"
+          gh release download "$tag" --repo ttlongdl/ShopeeBlocker \
+            --pattern 'com.ttlongdl.shopeeblocker-rh_*_iphoneos-arm64e.deb' \
+            --dir /tmp/shopeeblocker-rh
+
       - name: Validate package and stage update
         run: |
           set -euo pipefail
@@ -53,6 +69,29 @@ jobs:
           rm -f debs/com.ttlongdl.shopeeblocker_*_iphoneos-arm64.deb
           cp "$deb" "debs/$expected"
 
+      - name: Validate and stage RootHide update
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          found=(/tmp/shopeeblocker-rh/*.deb)
+          if [ "${#found[@]}" -eq 0 ]; then
+            echo "No RootHide release downloaded yet."
+            exit 0
+          fi
+          test "${#found[@]}" -eq 1
+          deb="${found[0]}"
+          test "$(dpkg-deb -f "$deb" Package)" = "com.ttlongdl.shopeeblocker-rh"
+          test "$(dpkg-deb -f "$deb" Architecture)" = "iphoneos-arm64e"
+          ver="$(dpkg-deb -f "$deb" Version)"
+          test -n "$ver"
+          expected="com.ttlongdl.shopeeblocker-rh_${ver}_iphoneos-arm64e.deb"
+          test "$(basename "$deb")" = "$expected"
+          dpkg-deb -c "$deb" | grep -Fq 'ShopeeBlocker.dylib'
+          dpkg-deb -c "$deb" | grep -Fq 'ShopeeBlocker.plist'
+          mkdir -p debs
+          rm -f debs/com.ttlongdl.shopeeblocker-rh_*_iphoneos-arm64e.deb
+          cp "$deb" "debs/$expected"
+
       - name: Regenerate APT indexes
         run: |
           set -euo pipefail
@@ -61,6 +100,9 @@ jobs:
           dpkg-scanpackages --multiversion debs /dev/null > Packages
           gzip -9c Packages > Packages.gz
           grep -Fq 'Package: com.ttlongdl.shopeeblocker' Packages
+          if compgen -G 'debs/com.ttlongdl.shopeeblocker-rh_*_iphoneos-arm64e.deb' > /dev/null; then
+            grep -Fq 'Package: com.ttlongdl.shopeeblocker-rh' Packages
+          fi
 
       - name: Commit changes
         run: |
