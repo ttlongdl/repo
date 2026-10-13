@@ -1,0 +1,77 @@
+name: Sync ShopeeBlocker releases to APT
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apt-publish
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Download latest published ShopeeBlocker release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/shopeeblocker
+          tag="$(gh release view --repo ttlongdl/ShopeeBlocker --json tagName --jq '.tagName')"
+          test -n "$tag"
+          echo "Latest published tag: $tag"
+          gh release download "$tag" --repo ttlongdl/ShopeeBlocker \
+            --pattern 'com.ttlongdl.shopeeblocker_*_iphoneos-arm64.deb' \
+            --dir /tmp/shopeeblocker
+
+      - name: Validate package and stage update
+        run: |
+          set -euo pipefail
+          mapfile -t found < <(find /tmp/shopeeblocker -maxdepth 1 -type f -name '*.deb')
+          test "${#found[@]}" -eq 1
+          deb="${found[0]}"
+          pkg="$(dpkg-deb -f "$deb" Package)"
+          arch="$(dpkg-deb -f "$deb" Architecture)"
+          ver="$(dpkg-deb -f "$deb" Version)"
+          test "$pkg" = "com.ttlongdl.shopeeblocker"
+          test "$arch" = "iphoneos-arm64"
+          test -n "$ver"
+          expected="com.ttlongdl.shopeeblocker_${ver}_iphoneos-arm64.deb"
+          test "$(basename "$deb")" = "$expected"
+          dpkg-deb -c "$deb" | grep -Fq 'ShopeeBlocker.dylib'
+          dpkg-deb -c "$deb" | grep -Fq 'ShopeeBlocker.plist'
+          mkdir -p debs
+          rm -f debs/com.ttlongdl.shopeeblocker_*_iphoneos-arm64.deb
+          cp "$deb" "debs/$expected"
+
+      - name: Regenerate APT indexes
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y dpkg-dev
+          dpkg-scanpackages --multiversion debs /dev/null > Packages
+          gzip -9c Packages > Packages.gz
+          grep -Fq 'Package: com.ttlongdl.shopeeblocker' Packages
+
+      - name: Commit changes
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debs Packages Packages.gz
+          if git diff --cached --quiet; then
+            echo 'Already synchronized'
+          else
+            git commit -m 'Sync ShopeeBlocker release to APT'
+            git pull --rebase origin main
+            git push origin main
+          fi
