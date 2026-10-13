@@ -26,9 +26,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/shopeeblocker
-          tag="$(gh release view --repo ttlongdl/ShopeeBlocker --json tagName --jq '.tagName')"
+          tag="$(gh release list --repo ttlongdl/ShopeeBlocker --limit 100 --json tagName,isDraft --jq '[.[] | select(.isDraft == false and (.tagName | test("^v[0-9]+\\.[0-9]+\\.[0-9]+$")))] | .[0].tagName // empty')"
           test -n "$tag"
-          echo "Latest published tag: $tag"
+          echo "Latest Rootless tag: $tag"
           gh release download "$tag" --repo ttlongdl/ShopeeBlocker \
             --pattern 'com.ttlongdl.shopeeblocker_*_iphoneos-arm64.deb' \
             --dir /tmp/shopeeblocker
