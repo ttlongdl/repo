@@ -130,3 +130,19 @@ Description: Unofficial RootHide iOS 17 port of Globalize by parrotgeek1.
 Author: parrotgeek1, ported by ttlongdl
 Name: Globalize17 (RootHide)
 
+Package: com.ttlongdl.shopeeblocker
+Version: 0.1.4
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 72
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.ttlongdl.shopeeblocker_0.1.4_iphoneos-arm64.deb
+Size: 4298
+MD5sum: 006b7f020398285885abbfb3a0802303
+SHA1: 0bf7dad7e92f6e6056dd82bcb0f90ee003daad68
+SHA256: 04a622c03bd2a2e8b88ebe78dff1cd476d8790e94d19a4dfe5f1dfb6c751914c
+Section: Tweaks
+Description: Blocks Shopee app deep links and Shopee short links from Facebook
+Author: ttlongdl
+Name: ShopeeBlocker
+
