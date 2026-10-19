@@ -38,9 +38,15 @@ jobs:
           ACTUAL_VERSION="$(dpkg-deb -f "$DEB" Version)"
           ACTUAL_PACKAGE="$(dpkg-deb -f "$DEB" Package)"
           ACTUAL_ARCH="$(dpkg-deb -f "$DEB" Architecture)"
-          test "$ACTUAL_VERSION" = "$VERSION"
-          test "$ACTUAL_PACKAGE" = "com.ttlongdl.fbaudiofix"
-          test "$ACTUAL_ARCH" = "iphoneos-arm64"
+          echo "DEB metadata: Package=$ACTUAL_PACKAGE Version=$ACTUAL_VERSION Architecture=$ACTUAL_ARCH"
+          if [ "$ACTUAL_VERSION" != "$VERSION" ]; then
+            echo "::error::Release tag $TAG disagrees with DEB Version $ACTUAL_VERSION"
+            exit 1
+          fi
+          if [ "$ACTUAL_PACKAGE" != "com.ttlongdl.fbaudiofix" ] || [ "$ACTUAL_ARCH" != "iphoneos-arm64" ]; then
+            echo "::error::Unexpected DEB package or architecture"
+            exit 1
+          fi
 
           rm -f debs/com.ttlongdl.fbaudiofix_*_iphoneos-arm64.deb
           cp "$DEB" "debs/${ACTUAL_PACKAGE}_${ACTUAL_VERSION}_${ACTUAL_ARCH}.deb"
