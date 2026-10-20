@@ -1,16 +1,16 @@
 Package: com.shajon.fbplus
-Version: 1.0.1-9
+Version: 1.0.2-1
 Architecture: iphoneos-arm64
-Maintainer: S. SHAJON
-Installed-Size: 972
+Maintainer: ttlongdl
+Installed-Size: 968
 Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.shajon.fbplus_1.0.1-9_iphoneos-arm64.deb
-Size: 488008
-MD5sum: bec9e34b75d4f0d3769d3c0ff7b3673c
-SHA1: 8fc83d6f006029747f40d1b30d96810a990af8ba
-SHA256: 20fe4bfc8dadf8a02f0a86444b585882de0038297c2262d2292c9c5f5b2b58b4
+Filename: debs/com.shajon.fbplus_1.0.2-1_iphoneos-arm64.deb
+Size: 487548
+MD5sum: f004a1ea10e00430f3680716fd3fb359
+SHA1: 53ad6368fa825565cf1d65b86dc902beff6badbb
+SHA256: 09911c007c4db076f72a50344dd49296977734a7003bdc58b7f426f5a68f1128
 Section: Tweaks
-Description: Browse stories privately, confirm before liking, and quieten the feed.
+Description: Upstream Facebook Plus with tested Feed, Story, Reels and audio fixes.
 Tag: role::hacker
 Author: S. SHAJON
 Name: Facebook Plus
