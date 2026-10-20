@@ -1,0 +1,62 @@
+name: Publish Facebook Plus RootHide to APT
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apt-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch matching Facebook Plus RootHide release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VERSION="$(dpkg-deb -f "$(find debs -maxdepth 1 -name 'com.shajon.fbplus_*_iphoneos-arm64.deb' -print -quit)" Version)"
+          TAG="v${VERSION}"
+          ASSET="Facebook-Plus-v${VERSION}-roothide.deb"
+          if ! gh release view "$TAG" --repo ttlongdl/Facebook-Plus --json assets --jq '.assets[].name' | grep -Fxq "$ASSET"; then
+            echo "RootHide release asset not ready yet: $ASSET"
+            exit 0
+          fi
+          mkdir -p /tmp/fbplus-rh
+          gh release download "$TAG" --repo ttlongdl/Facebook-Plus --pattern "$ASSET" --dir /tmp/fbplus-rh
+          DEB="/tmp/fbplus-rh/$ASSET"
+          test -s "$DEB"
+          PKG="$(dpkg-deb -f "$DEB" Package)"
+          VER="$(dpkg-deb -f "$DEB" Version)"
+          ARCH="$(dpkg-deb -f "$DEB" Architecture)"
+          test "$PKG" = "com.shajon.fbplus"
+          test "$VER" = "$VERSION"
+          test "$ARCH" = "iphoneos-arm64e"
+          dpkg-deb --contents "$DEB" | grep -Fq 'FacebookPlus.dylib'
+          rm -f debs/com.shajon.fbplus_*_iphoneos-arm64e.deb
+          cp "$DEB" "debs/${PKG}_${VER}_${ARCH}.deb"
+          echo "RootHide package staged: $PKG $VER $ARCH"
+      - name: Rebuild APT indexes and commit if changed
+        run: |
+          set -euo pipefail
+          if ! git status --short debs | grep -q .; then
+            echo "No RootHide package change."
+            exit 0
+          fi
+          sudo apt-get update -qq
+          sudo apt-get install -y dpkg-dev
+          dpkg-scanpackages --multiversion debs /dev/null > Packages
+          gzip -9c Packages > Packages.gz
+          grep -Fq 'Architecture: iphoneos-arm64e' Packages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add debs Packages Packages.gz
+          git commit -m "Publish Facebook Plus RootHide $VERSION"
+          git push
