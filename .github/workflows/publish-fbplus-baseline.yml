@@ -9,39 +9,59 @@ on:
 
 permissions:
   contents: write
-  actions: read
+
+concurrency:
+  group: publish-facebook-plus
+  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download Facebook Plus v1.0.1-9 rootless release
+        with:
+          persist-credentials: true
+      - name: Download and validate latest Facebook Plus rootless release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -euxo pipefail
+          set -euo pipefail
           mkdir -p /tmp/fbplus
-          gh release download v1.0.1-9 \
-            --repo ttlongdl/Facebook-Plus \
-            --pattern "Facebook-Plus-v1.0.1-9-rootless.deb" \
-            --dir /tmp/fbplus
-          ROOTLESS="/tmp/fbplus/Facebook-Plus-v1.0.1-9-rootless.deb"
-          test -s "$ROOTLESS"
-
-          # Keep only the current Facebook Plus package in the APT pool.
+          TAG="$(gh release view --repo ttlongdl/Facebook-Plus --json tagName --jq '.tagName')"
+          VERSION="${TAG#v}"
+          ASSET="Facebook-Plus-v${VERSION}-rootless.deb"
+          echo "Publishing ${TAG} / ${ASSET}"
+          gh release download "$TAG" --repo ttlongdl/Facebook-Plus --pattern "$ASSET" --dir /tmp/fbplus
+          DEB="/tmp/fbplus/$ASSET"
+          test -s "$DEB"
+          PKG="$(dpkg-deb -f "$DEB" Package)"
+          VER="$(dpkg-deb -f "$DEB" Version)"
+          ARCH="$(dpkg-deb -f "$DEB" Architecture)"
+          echo "Package=$PKG Version=$VER Architecture=$ARCH"
+          test "$PKG" = "com.shajon.fbplus"
+          test "$VER" = "$VERSION"
+          test "$ARCH" = "iphoneos-arm64"
+          sha256sum "$DEB"
+          # Retain other packages; replace only the old Facebook Plus rootless version.
           rm -f debs/com.shajon.fbplus_*_iphoneos-arm64.deb
-          cp "$ROOTLESS" debs/com.shajon.fbplus_1.0.1-9_iphoneos-arm64.deb
+          cp "$DEB" "debs/${PKG}_${VER}_${ARCH}.deb"
       - name: Rebuild APT indexes
         run: |
+          set -euo pipefail
           sudo apt-get update -qq
           sudo apt-get install -y dpkg-dev
           dpkg-scanpackages --multiversion debs /dev/null > Packages
           gzip -9c Packages > Packages.gz
-      - name: Commit official release
+          grep -A 8 '^Package: com.shajon.fbplus$' Packages
+      - name: Commit updated package indexes
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "Publish Facebook Plus 1.0.1-9 official"
-          git push
+          git add debs Packages Packages.gz
+          if git diff --cached --quiet; then
+            echo "APT repository already up to date."
+          else
+            git commit -m "Publish latest Facebook Plus rootless release"
+            git push
+          fi
