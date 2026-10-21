@@ -1,9 +1,7 @@
-name: Publish Facebook Plus RootHide to APT
+name: Publish Facebook Plus Rootless and RootHide to APT
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '17 */6 * * *'
 
 permissions:
   contents: write
@@ -17,48 +15,58 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch matching Facebook Plus RootHide release
+      - name: Download and validate Facebook Plus v1.0.2-2 DEBs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          VERSION="$(dpkg-deb -f "$(find debs -maxdepth 1 -name 'com.shajon.fbplus_*_iphoneos-arm64.deb' -print -quit)" Version)"
+          VERSION="1.0.2-2"
           TAG="v${VERSION}"
-          ASSET="Facebook-Plus-v${VERSION}-roothide.deb"
-          if ! gh release view "$TAG" --repo ttlongdl/Facebook-Plus --json assets --jq '.assets[].name' | grep -Fxq "$ASSET"; then
-            echo "RootHide release asset not ready yet: $ASSET"
-            exit 0
-          fi
-          mkdir -p /tmp/fbplus-rh
-          gh release download "$TAG" --repo ttlongdl/Facebook-Plus --pattern "$ASSET" --dir /tmp/fbplus-rh
-          DEB="/tmp/fbplus-rh/$ASSET"
-          test -s "$DEB"
-          PKG="$(dpkg-deb -f "$DEB" Package)"
-          VER="$(dpkg-deb -f "$DEB" Version)"
-          ARCH="$(dpkg-deb -f "$DEB" Architecture)"
-          test "$PKG" = "com.shajon.fbplus"
-          test "$VER" = "$VERSION"
-          test "$ARCH" = "iphoneos-arm64e"
-          dpkg-deb --contents "$DEB" > /tmp/fbplus-rh-contents.txt
-          grep -Fq 'FacebookPlus.dylib' /tmp/fbplus-rh-contents.txt
-          rm -f debs/com.shajon.fbplus_*_iphoneos-arm64e.deb
-          cp "$DEB" "debs/${PKG}_${VER}_${ARCH}.deb"
-          echo "RootHide package staged: $PKG $VER $ARCH"
-      - name: Rebuild APT indexes and commit if changed
+          mkdir -p /tmp/fbplus-release debs
+          for scheme in rootless roothide; do
+            asset="Facebook-Plus-v${VERSION}-${scheme}.deb"
+            gh release download "$TAG" --repo ttlongdl/Facebook-Plus --pattern "$asset" --dir /tmp/fbplus-release
+            deb="/tmp/fbplus-release/$asset"
+            test -s "$deb"
+            test "$(dpkg-deb -f "$deb" Package)" = "com.shajon.fbplus"
+            test "$(dpkg-deb -f "$deb" Version)" = "$VERSION"
+            case "$scheme" in
+              rootless) arch="iphoneos-arm64" ;;
+              roothide) arch="iphoneos-arm64e" ;;
+            esac
+            test "$(dpkg-deb -f "$deb" Architecture)" = "$arch"
+            dpkg-deb --contents "$deb" | grep -Fq 'FacebookPlus.dylib'
+            dpkg-deb --contents "$deb" | grep -Fq 'FacebookPlus.bundle'
+            dest="debs/com.shajon.fbplus_${VERSION}_${arch}.deb"
+            cp "$deb" "$dest"
+            echo "Staged $dest"
+          done
+
+      - name: Regenerate APT indexes and validate both architectures
         run: |
           set -euo pipefail
-          if ! git status --short debs | grep -q .; then
-            echo "No RootHide package change."
-            exit 0
-          fi
           sudo apt-get update -qq
           sudo apt-get install -y dpkg-dev
           dpkg-scanpackages --multiversion debs /dev/null > Packages
-          gzip -9c Packages > Packages.gz
-          grep -Fq 'Architecture: iphoneos-arm64e' Packages
+          gzip -n -9c Packages > Packages.gz
+          for arch in iphoneos-arm64 iphoneos-arm64e; do
+            grep -A 18 -F 'Version: 1.0.2-2' Packages | grep -Fq "Architecture: $arch" || {
+              echo "::error::Missing Facebook Plus 1.0.2-2 $arch in Packages"
+              exit 1
+            }
+            grep -Fq "Filename: debs/com.shajon.fbplus_1.0.2-2_${arch}.deb" Packages
+          done
+          echo "Both packages indexed; existing package versions retained for rollback."
+
+      - name: Commit and push only if changed
+        run: |
+          set -euo pipefail
+          git add debs Packages Packages.gz
+          if git diff --cached --quiet; then
+            echo "APT repo already up to date."
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add debs Packages Packages.gz
-          VERSION="$(dpkg-deb -f "$(find debs -maxdepth 1 -name 'com.shajon.fbplus_*_iphoneos-arm64e.deb' -print -quit)" Version)"
-          git commit -m "Publish Facebook Plus RootHide $VERSION"
+          git commit -m "Publish Facebook Plus v1.0.2-2 Rootless and RootHide"
           git push
