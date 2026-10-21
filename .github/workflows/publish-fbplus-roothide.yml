@@ -15,13 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download and validate Facebook Plus v1.0.2-2 DEBs
+      - name: Download and validate latest released Facebook Plus DEBs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          VERSION="1.0.2-2"
-          TAG="v${VERSION}"
+          TAG="$(gh api repos/ttlongdl/Facebook-Plus/releases/latest --jq '.tag_name')"
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-[0-9]+$ ]] || { echo "::error::Unexpected FBPlus release tag: $TAG"; exit 1; }
+          VERSION="${TAG#v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           mkdir -p /tmp/fbplus-release debs
           for scheme in rootless roothide; do
             asset="Facebook-Plus-v${VERSION}-${scheme}.deb"
@@ -52,11 +54,20 @@ jobs:
           dpkg-scanpackages --multiversion debs /dev/null > Packages
           gzip -n -9c Packages > Packages.gz
           for arch in iphoneos-arm64 iphoneos-arm64e; do
-            grep -A 18 -F 'Version: 1.0.2-2' Packages | grep -Fq "Architecture: $arch" || {
-              echo "::error::Missing Facebook Plus 1.0.2-2 $arch in Packages"
-              exit 1
-            }
-            grep -Fq "Filename: debs/com.shajon.fbplus_1.0.2-2_${arch}.deb" Packages
+            awk -v v="$VERSION" -v a="$arch" '
+              BEGIN { RS=""; FS="\\n"; found=0 }
+              {
+                pkg=ver=architecture=filename=""
+                for(i=1;i<=NF;i++) {
+                  if($i=="Package: com.shajon.fbplus") pkg=1
+                  if($i=="Version: " v) ver=1
+                  if($i=="Architecture: " a) architecture=1
+                  if($i=="Filename: debs/com.shajon.fbplus_" v "_" a ".deb") filename=1
+                }
+                if(pkg && ver && architecture && filename) found=1
+              }
+              END { exit !found }
+            ' Packages || { echo "::error::Missing FBPlus $VERSION $arch in Packages"; exit 1; }
           done
           echo "Both packages indexed; existing package versions retained for rollback."
 
@@ -70,5 +81,5 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Publish Facebook Plus v1.0.2-2 Rootless and RootHide"
+          git commit -m "Publish Facebook Plus v${VERSION} Rootless and RootHide"
           git push
