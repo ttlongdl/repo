@@ -35,8 +35,10 @@ jobs:
               roothide) arch="iphoneos-arm64e" ;;
             esac
             test "$(dpkg-deb -f "$deb" Architecture)" = "$arch"
-            dpkg-deb --contents "$deb" | grep -Fq 'FacebookPlus.dylib'
-            dpkg-deb --contents "$deb" | grep -Fq 'FacebookPlus.bundle'
+            contents="/tmp/fbplus-release/${scheme}-contents.txt"
+            dpkg-deb --contents "$deb" > "$contents"
+            grep -Fq 'FacebookPlus.dylib' "$contents"
+            grep -Fq 'FacebookPlus.bundle' "$contents"
             dest="debs/com.shajon.fbplus_${VERSION}_${arch}.deb"
             cp "$deb" "$dest"
             echo "Staged $dest"
