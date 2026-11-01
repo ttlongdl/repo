@@ -1,22 +1,5 @@
 Package: com.shajon.fbplus
 Version: 1.0.2-1
-Architecture: iphoneos-arm64
-Maintainer: ttlongdl
-Installed-Size: 968
-Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.shajon.fbplus_1.0.2-1_iphoneos-arm64.deb
-Size: 487548
-MD5sum: f004a1ea10e00430f3680716fd3fb359
-SHA1: 53ad6368fa825565cf1d65b86dc902beff6badbb
-SHA256: 09911c007c4db076f72a50344dd49296977734a7003bdc58b7f426f5a68f1128
-Section: Tweaks
-Description: Upstream Facebook Plus with tested Feed, Story, Reels and audio fixes.
-Tag: role::hacker
-Author: S. SHAJON
-Name: Facebook Plus
-
-Package: com.shajon.fbplus
-Version: 1.0.2-1
 Architecture: iphoneos-arm64e
 Maintainer: ttlongdl
 Installed-Size: 952
@@ -26,6 +9,23 @@ Size: 486386
 MD5sum: b9a408ad7953f246d91fc64f13b07ae0
 SHA1: 3663af821b7ec4de1cb09b3804777e2580928dc0
 SHA256: 55029aada36535e10329001f0e54bdf243de7ecb1ceb282fad86f9e70bcd717b
+Section: Tweaks
+Description: Upstream Facebook Plus with tested Feed, Story, Reels and audio fixes.
+Tag: role::hacker
+Author: S. SHAJON
+Name: Facebook Plus
+
+Package: com.shajon.fbplus
+Version: 1.0.2-1
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 968
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.shajon.fbplus_1.0.2-1_iphoneos-arm64.deb
+Size: 487548
+MD5sum: f004a1ea10e00430f3680716fd3fb359
+SHA1: 53ad6368fa825565cf1d65b86dc902beff6badbb
+SHA256: 09911c007c4db076f72a50344dd49296977734a7003bdc58b7f426f5a68f1128
 Section: Tweaks
 Description: Upstream Facebook Plus with tested Feed, Story, Reels and audio fixes.
 Tag: role::hacker
@@ -68,23 +68,6 @@ Name: Facebook Plus
 
 Package: com.shajon.fbplus
 Version: 1.0.3-1
-Architecture: iphoneos-arm64e
-Maintainer: ttlongdl
-Installed-Size: 944
-Depends: mobilesubstrate (>= 0.9.5000)
-Filename: debs/com.shajon.fbplus_1.0.3-1_iphoneos-arm64e.deb
-Size: 479782
-MD5sum: 79ff05ba6b968ceb3e01dd4d3cceb318
-SHA1: d1737022959333971ab347dd6cd6c97b9a84165f
-SHA256: bc76d8fd3f06ff405c23e27674aa7dd466d3fe4296edc1799cfda8ee7d191b1c
-Section: Tweaks
-Description: Upstream-based Facebook Plus with Story/Reels and LinkBridge fixes; FBAudioFix and ShopeeBlocker remain standalone.
-Tag: role::hacker
-Author: S. SHAJON
-Name: Facebook Plus
-
-Package: com.shajon.fbplus
-Version: 1.0.3-1
 Architecture: iphoneos-arm64
 Maintainer: ttlongdl
 Installed-Size: 944
@@ -94,6 +77,23 @@ Size: 480434
 MD5sum: 6f42fd382fb8a9f26f806491b4deda9d
 SHA1: 115478c19f954e3076669f4ca177d476ae272d8f
 SHA256: 73645f4334e998cb7c8f9862906f42115ee3256972efb05ba86167db415d31b3
+Section: Tweaks
+Description: Upstream-based Facebook Plus with Story/Reels and LinkBridge fixes; FBAudioFix and ShopeeBlocker remain standalone.
+Tag: role::hacker
+Author: S. SHAJON
+Name: Facebook Plus
+
+Package: com.shajon.fbplus
+Version: 1.0.3-1
+Architecture: iphoneos-arm64e
+Maintainer: ttlongdl
+Installed-Size: 944
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.shajon.fbplus_1.0.3-1_iphoneos-arm64e.deb
+Size: 479782
+MD5sum: 79ff05ba6b968ceb3e01dd4d3cceb318
+SHA1: d1737022959333971ab347dd6cd6c97b9a84165f
+SHA256: bc76d8fd3f06ff405c23e27674aa7dd466d3fe4296edc1799cfda8ee7d191b1c
 Section: Tweaks
 Description: Upstream-based Facebook Plus with Story/Reels and LinkBridge fixes; FBAudioFix and ShopeeBlocker remain standalone.
 Tag: role::hacker
