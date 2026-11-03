@@ -2,10 +2,6 @@ name: Publish Facebook Plus Rootless and RootHide to APT
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/publish-fbplus-roothide.yml'
 
 permissions:
   contents: write
@@ -16,8 +12,6 @@ concurrency:
 
 jobs:
   publish:
-    # Guarded one-time publish trigger; normal future pushes will not publish.
-    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'Trigger APT FBPlus v1.0.4-1 publish'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
