@@ -100,6 +100,40 @@ Tag: role::hacker
 Author: S. SHAJON
 Name: Facebook Plus
 
+Package: com.shajon.fbplus
+Version: 1.0.4-1
+Architecture: iphoneos-arm64e
+Maintainer: ttlongdl
+Installed-Size: 1104
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.shajon.fbplus_1.0.4-1_iphoneos-arm64e.deb
+Size: 556656
+MD5sum: 9f83923a3b36373566b2dcacac8d4035
+SHA1: f7aa37f3c476d7cf86e9f33256992c8327a04af9
+SHA256: 66aa2db6fa4409f0d98eb50bc8e341c057197483660e93e79d6c8523bc0752e2
+Section: Tweaks
+Description: Browse stories privately, confirm before liking, and quieten the feed.
+Tag: role::hacker
+Author: S. SHAJON
+Name: Facebook Plus
+
+Package: com.shajon.fbplus
+Version: 1.0.4-1
+Architecture: iphoneos-arm64
+Maintainer: ttlongdl
+Installed-Size: 1104
+Depends: mobilesubstrate (>= 0.9.5000)
+Filename: debs/com.shajon.fbplus_1.0.4-1_iphoneos-arm64.deb
+Size: 557304
+MD5sum: 7785541118a317757dba3c350308bad4
+SHA1: 4670bbfab7aa57e13e20fa9aa97757619464aafc
+SHA256: e0382c84d78bc963a73cd435a82dc6ada8e096410837971a6a8df1bc793f82ce
+Section: Tweaks
+Description: Browse stories privately, confirm before liking, and quieten the feed.
+Tag: role::hacker
+Author: S. SHAJON
+Name: Facebook Plus
+
 Package: com.ttlongdl.batteryukrm
 Version: 1.0.2
 Architecture: iphoneos-arm64
